@@ -2921,7 +2921,7 @@ input, select, textarea {
 	#header {
 		padding: 9em 0 9em 0 ;
 		background-color: #4686a0;
-		color: rgba(255, 255, 255, 0.75);
+		color: rgba(255, 255, 255, 255);
 		background-attachment: fixed,							fixed,							fixed;
 		background-image: url("images/overlay2.png"), url("images/overlay3.svg"), linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
 		background-position: top left,						center center,					center center;
@@ -3033,11 +3033,17 @@ input, select, textarea {
 				padding-left: 0;
 			}
 
-			#header .actions:after {
+
+
+
+
+
+
+			#header .actions:after { /* line header */
 				background: #ffffff;
 				content: '';
 				height: 100vh;
-				left: 50%;
+				left: 49.8%;
 				position: absolute;
 				top: 100%;
 				width: 1px;
