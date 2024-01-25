@@ -1,0 +1,2 @@
+console.log('Codewars Baby!');
+
