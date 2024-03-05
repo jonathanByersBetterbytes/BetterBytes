@@ -3,7 +3,7 @@
 let deckId = ''  // global variable
 let player1Score = 0
 let player2Score = 0
-document.querySelector('button').addEventListener('click', drawTwo)
+document.querySelector('#dealTwo').addEventListener('click', drawTwo)
 document.querySelector('#war').addEventListener('click', drawEight)
 
 fetch(`https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`)
@@ -44,7 +44,7 @@ function drawTwo(){
       }else{
         document.querySelector('h1').innerText = 'Time for War!'
         document.querySelector('#war').style.visibility = 'visible'
-
+        document.querySelector('#dealTwo').style.visibility = 'hidden'
       }
     }else{
       if(player1Score > player2Score){
@@ -58,13 +58,13 @@ function drawTwo(){
       console.log(`error ${err}`)
   });
 }
-  function convertToNum(val){
-    if(val === 'JACK') return 11
-    else if(val === 'QUEEN') return 12
-    else if(val === 'KING') return 13
-    else if(val === 'ACE') return 14
-    else return Number(val) 
-  }
+function convertToNum(val){
+  if(val === 'JACK') return 11
+  else if(val === 'QUEEN') return 12
+  else if(val === 'KING') return 13
+  else if(val === 'ACE') return 14
+  else return Number(val) 
+}
 
 function drawEight(){
     let localDeckId = localStorage.getItem('deckId')
@@ -73,31 +73,41 @@ function drawEight(){
     .then(res => res.json()) // parse response as JSON
     .then(data => {
       console.log(data)
-      let player1Val
-      let player2Val
+      if(data.success){
+        let player1Val
+        let player2Val
 
-      document.querySelector('#war').style.visibility = 'hidden'
+        document.querySelector('#war').style.visibility = 'hidden'
+        document.querySelector('#dealTwo').style.visibility = 'visible'
 
-      for(let i = 0; i < 8; i++){
-        if(i === 3){
-          document.querySelector('#player1Card').src = data.cards[i].image  // pick each player's fourth card
-          player1Val = convertToNum(data.cards[i].value)
-        }else if(i === 7){  // pick each player's fourth card
-          document.querySelector('#player2Card').src = data.cards[i].image
-          player2Val = convertToNum(data.cards[i].value)
+        for(let i = 0; i < 8; i++){
+          if(i === 3){
+            document.querySelector('#player1Card').src = data.cards[i].image  // pick each player's fourth card
+            player1Val = convertToNum(data.cards[i].value)
+          }else if(i === 7){  // pick each player's fourth card
+            document.querySelector('#player2Card').src = data.cards[i].image
+            player2Val = convertToNum(data.cards[i].value)
+          }
         }
-      }
-      if(player1Val > player2Val){
-        player1Score +=8
-        document.querySelector('h1').innerText = 'Player 1 Wins'
-        document.querySelector('#pl1Score').innerText = player1Score 
-      }else if(player1Val < player2Val){
-        player2Score +=8
-        document.querySelector('h1').innerText = 'Player 2 Wins'
-        document.querySelector('#pl2Score').innerText = player2Score
+        if(player1Val > player2Val){
+          player1Score +=8
+          document.querySelector('h1').innerText = 'Player 1 Wins'
+          document.querySelector('#pl1Score').innerText = player1Score 
+        }else if(player1Val < player2Val){
+          player2Score +=8
+          document.querySelector('h1').innerText = 'Player 2 Wins'
+          document.querySelector('#pl2Score').innerText = player2Score
+        }else{
+          document.querySelector('h3').innerText = 'Time for War!'
+          document.querySelector('#war').style.visibility = 'visible'
+          document.querySelector('#dealTwo').style.visibility = 'hidden'
+        }
       }else{
-        document.querySelector('h3').innerText = 'Time for War!'
-        document.querySelector('#war').style.visibility = 'visible'
+        if(player1Score > player2Score){
+          document.querySelector('h1').innerText = 'Out of Cards: Player 1 Wins!!'
+        }else if(player1Val < player2Score){
+          document.querySelector('h1').innerText = 'Out of Cards: Player 2 Wins!!'
+        }
       }
     })
     .catch(err => {
