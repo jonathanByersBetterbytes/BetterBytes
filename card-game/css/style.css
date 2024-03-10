@@ -27,4 +27,11 @@ section{
 
 #war {
   visibility: hidden;
+}body {
+  background: black;
+  color: aliceblue;
+}
+h1{
+  text-align: center;
+  
 }
