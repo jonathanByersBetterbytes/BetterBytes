@@ -17,7 +17,14 @@ img{
   height: 50%;
 }
 
-
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
+	body {
+		background: black;
+    color: aliceblue;
+	}
+h1{
+  text-align: center;
+  
+}
